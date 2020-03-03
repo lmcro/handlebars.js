@@ -1,7 +1,15 @@
 require('./common');
 
 var fs = require('fs'),
-    vm = require('vm');
+  vm = require('vm');
+
+var chai = require('chai');
+var dirtyChai = require('dirty-chai');
+
+chai.use(dirtyChai);
+global.expect = chai.expect;
+
+global.sinon = require('sinon');
 
 global.Handlebars = 'no-conflict';
 
@@ -9,7 +17,11 @@ var filename = 'dist/handlebars.js';
 if (global.minimizedTest) {
   filename = 'dist/handlebars.min.js';
 }
-vm.runInThisContext(fs.readFileSync(__dirname + '/../../' + filename), filename);
+var distHandlebars = fs.readFileSync(
+  require.resolve('../../' + filename),
+  'utf-8'
+);
+vm.runInThisContext(distHandlebars, filename);
 
 global.CompilerContext = {
   browser: true,

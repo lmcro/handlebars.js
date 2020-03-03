@@ -1,21 +1,21 @@
 [![Travis Build Status](https://img.shields.io/travis/wycats/handlebars.js/master.svg)](https://travis-ci.org/wycats/handlebars.js)
+[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/wycats/handlebars.js?branch=master&svg=true)](https://ci.appveyor.com/project/wycats/handlebars-js)
 [![Selenium Test Status](https://saucelabs.com/buildstatus/handlebars)](https://saucelabs.com/u/handlebars)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/handlebars/badge?style=rounded)](https://www.jsdelivr.com/package/npm/handlebars)
 
 Handlebars.js
 =============
 
-Handlebars.js is an extension to the [Mustache templating
-language](http://mustache.github.com/) created by Chris Wanstrath.
-Handlebars.js and Mustache are both logicless templating languages that
-keep the view and the code separated like we all know they should be.
+Handlebars provides the power necessary to let you build **semantic templates** effectively with no frustration.
+Handlebars is largely compatible with Mustache templates. In most cases it is possible to swap out Mustache with Handlebars and continue using your current templates.
 
 Checkout the official Handlebars docs site at
-[http://www.handlebarsjs.com](http://www.handlebarsjs.com) and the live demo at [http://tryhandlebarsjs.com/](http://tryhandlebarsjs.com/).
+[https://handlebarsjs.com/](https://handlebarsjs.com) and the live demo at [http://tryhandlebarsjs.com/](http://tryhandlebarsjs.com/).
 
 Installing
 ----------
 
-See our [installation documentation](http://handlebarsjs.com/installation.html).
+See our [installation documentation](https://handlebarsjs.com/installation/).
 
 Usage
 -----
@@ -45,23 +45,23 @@ var result = template(data);
 // </ul>
 ```
 
-Full documentation and more examples are at [handlebarsjs.com](http://handlebarsjs.com/).
+Full documentation and more examples are at [handlebarsjs.com](https://handlebarsjs.com/).
 
 Precompiling Templates
 ----------------------
 
-Handlebars allows templates to be precompiled and included as javascript code rather than the handlebars template allowing for faster startup time. Full details are located [here](http://handlebarsjs.com/precompilation.html).
+Handlebars allows templates to be precompiled and included as javascript code rather than the handlebars template allowing for faster startup time. Full details are located [here](https://handlebarsjs.com/installation/precompilation.html).
 
 Differences Between Handlebars.js and Mustache
 ----------------------------------------------
 Handlebars.js adds a couple of additional features to make writing
 templates easier and also changes a tiny detail of how partials work.
 
-- [Nested Paths](http://handlebarsjs.com/#paths)
-- [Helpers](http://handlebarsjs.com/#helpers)
-- [Block Expressions](http://handlebarsjs.com/#block-expressions)
-- [Literal Values](http://handlebarsjs.com/#literals)
-- [Delimited Comments](http://handlebarsjs.com/#comments)
+- [Nested Paths](https://handlebarsjs.com/guide/expressions.html#path-expressions)
+- [Helpers](https://handlebarsjs.com/guide/expressions.html#helpers)
+- [Block Expressions](https://handlebarsjs.com/guide/block-helpers.html#basic-blocks)
+- [Literal Values](https://handlebarsjs.com/guide/expressions.html#literal-segments)
+- [Delimited Comments](https://handlebarsjs.com/guide/#template-comments)
 
 Block expressions have the same syntax as mustache sections but should not be confused with one another. Sections are akin to an implicit `each` or `with` statement depending on the input data and helpers are explicit pieces of code that are free to implement whatever behavior they like. The [mustache spec](http://mustache.github.io/mustache.5.html) defines the exact behavior of sections. In the case of name conflicts, helpers are given priority.
 
@@ -70,6 +70,7 @@ Block expressions have the same syntax as mustache sections but should not be co
 There are a few Mustache behaviors that Handlebars does not implement.
 - Handlebars deviates from Mustache slightly in that it does not perform recursive lookup by default. The compile time `compat` flag must be set to enable this functionality. Users should note that there is a performance cost for enabling this flag. The exact cost varies by template, but it's recommended that performance sensitive operations should avoid this mode and instead opt for explicit path references.
 - The optional Mustache-style lambdas are not supported. Instead Handlebars provides its own lambda resolution that follows the behaviors of helpers.
+- Handlebars does not allow space between the opening `{{` and a command character such as `#`, `/` or `>`. The command character must immediately follow the braces, so for example `{{> partial }}` is allowed but `{{ > partial }}` is not.
 - Alternative delimiters are not supported.
 
 
@@ -108,6 +109,12 @@ Upgrading
 ---------
 
 See [release-notes.md](https://github.com/wycats/handlebars.js/blob/master/release-notes.md) for upgrade notes.
+
+If you are using Handlebars in production, please regularly look for issues labeled 
+[possibly breaking](https://github.com/wycats/handlebars.js/issues?q=is%3Aopen+is%3Aissue+label%3A%22possibly+breaking%22).
+If this label is applied to an issue, it means that the requested change is probably not a breaking change,
+but since Handlebars is widely in use by a lot of people, chances are always there that it breaks somebodies build.
+
 
 Known Issues
 ------------
@@ -152,6 +159,10 @@ Handlebars in the Wild
 * [DOMBars](https://github.com/blakeembrey/dombars) is a DOM-based templating engine built on the Handlebars parser and runtime **DEPRECATED**
 * [promised-handlebars](https://github.com/nknapp/promised-handlebars) is a wrapper for Handlebars that allows helpers to return Promises.
 * [just-handlebars-helpers](https://github.com/leapfrogtechnology/just-handlebars-helpers) A fully tested lightweight package with common Handlebars helpers.
+* [incremental-bars](https://github.com/atomictag/incremental-bars) adds support for [incremental-dom](https://github.com/google/incremental-dom) as template target to Handlebars.
+* [apiDoc](https://github.com/apidoc/apidoc) apiDoc uses handlebars as parsing engine for api documentation view generation.
+* [handlebars-wax](https://github.com/shannonmoeller/handlebars-wax) The missing Handlebars API. Effortless registration of data, partials, helpers, and decorators using file-system globs, modules, and plain-old JavaScript objects.
+* [openVALIDATION](https://github.com/openvalidation/openvalidation) a natural language compiler for validation rules. Generates program code in Java, JavaScript, C#, Python and Rust with handlebars.
 
 External Resources
 ------------------

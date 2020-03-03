@@ -13,7 +13,10 @@ describe('javascript-compiler api', function() {
     });
 
     it('should allow override', function() {
-      handlebarsEnv.JavaScriptCompiler.prototype.nameLookup = function(parent, name) {
+      handlebarsEnv.JavaScriptCompiler.prototype.nameLookup = function(
+        parent,
+        name
+      ) {
         return parent + '.bar_' + name;
       };
       /* eslint-disable camelcase */
@@ -43,7 +46,7 @@ describe('javascript-compiler api', function() {
       };
       handlebarsEnv.VM.checkRevision = function(compilerInfo) {
         if (compilerInfo !== 'crazy') {
-          throw new Error('It didn\'t work');
+          throw new Error("It didn't work");
         }
       };
       shouldCompileTo('{{foo}} ', { foo: 'food' }, 'food ');
@@ -54,7 +57,8 @@ describe('javascript-compiler api', function() {
     beforeEach(function() {
       handlebarsEnv.JavaScriptCompiler.prototype.forceBuffer = true;
       $superAppend = handlebarsEnv.JavaScriptCompiler.prototype.appendToBuffer;
-      $superCreate = handlebarsEnv.JavaScriptCompiler.prototype.initializeBuffer;
+      $superCreate =
+        handlebarsEnv.JavaScriptCompiler.prototype.initializeBuffer;
     });
     afterEach(function() {
       handlebarsEnv.JavaScriptCompiler.prototype.forceBuffer = false;
@@ -69,10 +73,37 @@ describe('javascript-compiler api', function() {
       shouldCompileTo('{{foo}} ', { foo: 'food' }, 'foo_food ');
     });
     it('should allow append buffer override', function() {
-      handlebarsEnv.JavaScriptCompiler.prototype.appendToBuffer = function(string) {
+      handlebarsEnv.JavaScriptCompiler.prototype.appendToBuffer = function(
+        string
+      ) {
         return $superAppend.call(this, [string, ' + "_foo"']);
       };
       shouldCompileTo('{{foo}}', { foo: 'food' }, 'food_foo');
+    });
+  });
+
+  describe('#isValidJavaScriptVariableName', function() {
+    // It is there and accessible and could be used by someone. That's why we don't remove it
+    // it 4.x. But if we keep it, we add a test
+    // This test should not encourage you to use the function. It is not needed any more
+    // and might be removed in 5.0
+    ['test', 'abc123', 'abc_123'].forEach(function(validVariableName) {
+      it("should return true for '" + validVariableName + "'", function() {
+        expect(
+          handlebarsEnv.JavaScriptCompiler.isValidJavaScriptVariableName(
+            validVariableName
+          )
+        ).to.be.true();
+      });
+    });
+    [('123test', 'abc()', 'abc.cde')].forEach(function(invalidVariableName) {
+      it("should return true for '" + invalidVariableName + "'", function() {
+        expect(
+          handlebarsEnv.JavaScriptCompiler.isValidJavaScriptVariableName(
+            invalidVariableName
+          )
+        ).to.be.false();
+      });
     });
   });
 });
